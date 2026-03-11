@@ -1,591 +1,486 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0"
-		/>
-		<title>Baristas</title>
-		<link rel="stylesheet" href="styles.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	</head>
-	<body>
-		<header>
-			<div class="container-hero">
-				<div class="container hero">
-					<div class="customer-support">
-						<i class="fa-solid fa-headset"></i>
-						<div class="content-customer-support">
-							<span class="text">Soporte al cliente</span>
-							<span class="number">123-456-7890</span>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>BARISTAS — Café de Especialidad</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="stylesheet" href="styles.css">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+	<style>
+
+	</style>
+</head>
+
+<body>
+	<div class="grain"></div>
+	<div class="cursor" id="cursor"></div>
+	<div class="cursor-follower" id="cursorFollower"></div>
+	<div id="loader">
+		<div class="loader-logo">Baristas</div>
+		<div class="loader-bar">
+			<div class="loader-bar-fill"></div>
+		</div>
+		<div class="loader-text">Café de Especialidad</div>
+	</div>
+	<div class="toast-container" id="toastContainer"></div>
+	<div class="lightbox" id="lightbox">
+		<img src="" alt="" class="lightbox-img" id="lightboxImg">
+		<button class="lightbox-close" id="lightboxClose"><i class="fa fa-times"></i></button>
+	</div>
+	<div class="cart-overlay" id="cartOverlay"></div>
+
+	<div class="cart-panel" id="cartPanel">
+		<div class="cart-header">
+			<h2 class="cart-title">Tu Pedido</h2>
+			<button class="cart-close" id="cartClose"><i class="fa fa-times"></i></button>
+		</div>
+		<div class="cart-items" id="cartItems">
+			<div class="cart-empty">
+				<i class="fa fa-mug-hot"></i>
+				<p>Tu carrito está vacío</p>
+			</div>
+		</div>
+		<div class="cart-footer">
+			<div class="cart-subtotal">
+				<span class="cart-subtotal-label">Subtotal</span>
+				<span class="cart-subtotal-value" id="cartTotal">$0.00</span>
+			</div>
+			<button class="checkout-btn" onclick="checkout()">
+				<span>Proceder al pago <i class="fa fa-arrow-right" style="margin-left:1rem"></i></span>
+			</button>
+		</div>
+	</div>
+	<div class="mobile-menu" id="mobileMenu">
+		<ul class="mobile-menu-links">
+			<li><a href="#" onclick="closeMobile()">Inicio</a></li>
+			<li><a href="#categories" onclick="closeMobile()">Categorías</a></li>
+			<li><a href="#products" onclick="closeMobile()">Productos</a></li>
+			<li><a href="#blogs" onclick="closeMobile()">Blog</a></li>
+			<li><a href="#contact" onclick="closeMobile()">Contacto</a></li>
+		</ul>
+	</div>
+
+	<header id="siteHeader">
+		<div class="announce-bar-wrap">
+			<div class="announce-bar">
+				<div class="announce-scroll">
+					<span>✦ Envío gratis en pedidos +$150</span>
+					<span>✦ Café 100% orgánico certificado</span>
+					<span>✦ Tostado artesanal cada semana</span>
+					<span>✦ Nuevas variedades de temporada</span>
+					<span>✦ Envío gratis en pedidos +$150</span>
+					<span>✦ Café 100% orgánico certificado</span>
+					<span>✦ Tostado artesanal cada semana</span>
+					<span>✦ Nuevas variedades de temporada</span>
+				</div>
+			</div>
+		</div>
+		<nav class="main-header">
+			<div class="nav-left">
+				<button class="mobile-toggle" id="mobileToggle"><i class="fa fa-bars"></i></button>
+				<ul class="nav-menu">
+					<li><a href="#">Inicio</a></li>
+					<li><a href="#categories">Categorías</a></li>
+					<li><a href="#products">Productos</a></li>
+				</ul>
+			</div>
+			<a class="logo" href="#">B<span>A</span>RISTAS</a>
+			<div class="nav-right">
+				<ul class="nav-menu">
+					<li><a href="#blogs">Blog</a></li>
+					<li><a href="#contact">Contacto</a></li>
+				</ul>
+				<button class="nav-icon"><i class="fa fa-magnifying-glass"></i></button>
+				<button class="cart-btn" id="cartBtn">
+					<i class="fa fa-basket-shopping"></i>
+					<span>Carrito</span>
+					<div class="cart-badge" id="cartBadge">0</div>
+				</button>
+			</div>
+		</nav>
+	</header>
+
+	<section class="hero">
+		<div class="hero-left">
+			<div class="hero-tag">✦ Tostado Artesanal Desde 2010</div>
+			<h1 class="hero-title">
+				Despierta tus<br>
+				<em>Sentidos</em><br>
+				con café
+			</h1>
+			<p class="hero-sub">Seleccionamos los mejores granos de origen único para crear experiencias de café
+				extraordinarias, tostadas con pasión y precisión.</p>
+			<div class="hero-actions">
+				<a href="#products" class="btn-primary"><span>Explorar Menú</span></a>
+				<a href="#categories" class="btn-ghost">Nuestras Colecciones <span class="arrow">→</span></a>
+			</div>
+			<div class="scroll-indicator">
+				<div class="scroll-line"></div>
+				<span class="scroll-text">Scroll</span>
+			</div>
+		</div>
+		<div class="hero-right">
+			<div class="hero-overlay"></div>
+			<img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&q=85" alt="Coffee"
+				class="hero-img">
+			<div class="hero-stats">
+				<div class="stat"><span class="stat-num" data-count="200">0</span><span
+						class="stat-label">Variedades</span></div>
+				<div class="stat"><span class="stat-num" data-count="15">0</span><span class="stat-label">Países
+						Origen</span></div>
+				<div class="stat"><span class="stat-num" data-count="50000">0</span><span
+						class="stat-label">Clientes</span></div>
+			</div>
+		</div>
+	</section>
+	<div class="features">
+		<div class="features-inner">
+			<div class="feature-item reveal">
+				<div class="feature-icon"><i class="fa fa-plane-up"></i></div>
+				<div class="feature-text">
+					<h4>Envío Mundial</h4>
+					<p>En pedidos sobre $150</p>
+				</div>
+			</div>
+			<div class="feature-item reveal reveal-delay-1">
+				<div class="feature-icon"><i class="fa fa-rotate-left"></i></div>
+				<div class="feature-text">
+					<h4>Devolución 30 días</h4>
+					<p>Garantía sin preguntas</p>
+				</div>
+			</div>
+			<div class="feature-item reveal reveal-delay-2">
+				<div class="feature-icon"><i class="fa fa-leaf"></i></div>
+				<div class="feature-text">
+					<h4>100% Orgánico</h4>
+					<p>Certificado y sostenible</p>
+				</div>
+			</div>
+			<div class="feature-item reveal reveal-delay-3">
+				<div class="feature-icon"><i class="fa fa-headset"></i></div>
+				<div class="feature-text">
+					<h4>Soporte 24/7</h4>
+					<p>Siempre disponibles</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section class="categories" id="categories">
+		<div class="inner">
+			<div class="section-header reveal">
+				<span class="section-tag">Explora</span>
+				<h2 class="section-title">Nuestras <em>Colecciones</em></h2>
+				<div class="section-line"></div>
+			</div>
+			<div class="categories-grid">
+				<div class="cat-card featured reveal" style="background:#0a0502">
+					<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80" alt="Moca">
+					<div class="cat-overlay"></div>
+					<div class="cat-content">
+						<span class="cat-tag">Nuestra favorita</span>
+						<h3 class="cat-title">Café Moca</h3>
+						<div class="cat-arrow"><i class="fa fa-arrow-right"></i></div>
+					</div>
+				</div>
+				<div style="display:flex;flex-direction:column;gap:2rem">
+					<div class="cat-card reveal reveal-delay-1">
+						<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn8ZP8CVkVsfh1js6RyGlG9XSm3ln_jZxCQQ&s"
+							alt="Espresso">
+						<div class="cat-overlay"></div>
+						<div class="cat-content">
+							<span class="cat-tag">Clásico</span>
+							<h3 class="cat-title">Expreso Americano</h3>
+							<div class="cat-arrow"><i class="fa fa-arrow-right"></i></div>
 						</div>
 					</div>
-
-					<div class="container-logo">
-						<i class="fa-solid fa-mug-hot"></i>
-						<h1 class="logo"><a href="/">Baristas</a></h1>
-					</div>
-
-					<div class="container-user">
-						<i class="fa-solid fa-user"></i>
-						<i class="fa-solid fa-basket-shopping"></i>
-						<div class="content-shopping-cart">
-							<span class="text">Carrito</span>
-							<span class="number">(0)</span>
+					<div class="cat-card reveal reveal-delay-2">
+						<img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=700&q=80"
+							alt="Capuchino">
+						<div class="cat-overlay"></div>
+						<div class="cat-content">
+							<span class="cat-tag">Premium</span>
+							<h3 class="cat-title">Capuchino Artesanal</h3>
+							<div class="cat-arrow"><i class="fa fa-arrow-right"></i></div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<div class="container-navbar">
-				<nav class="navbar container">
-					<i class="fa-solid fa-bars"></i>
-					<ul class="menu">
+		</div>
+	</section>
+	<section class="products" id="products">
+		<div class="inner">
+			<div class="section-header reveal">
+				<span class="section-tag">Selección</span>
+				<h2 class="section-title">Mejores <em>Productos</em></h2>
+				<div class="section-line"></div>
+			</div>
+			<div class="filter-tabs">
+				<button class="filter-tab active" data-filter="all">Todos</button>
+				<button class="filter-tab" data-filter="hot">Café Caliente</button>
+				<button class="filter-tab" data-filter="cold">Café Frío</button>
+				<button class="filter-tab" data-filter="special">Especiales</button>
+			</div>
+			<div class="products-grid" id="productsGrid"></div>
+		</div>
+	</section>
+	<section class="promo-banner">
+		<div class="inner promo-inner">
+			<div class="promo-text reveal">
+				<span class="section-tag">Oferta Especial</span>
+				<h2 class="promo-title">Descuento del<br><em>30%</em> en el Café<br>Vienna Premium</h2>
+				<p class="promo-desc">No te pierdas esta oferta única. Nuestro café Vienna, reconocido por su perfil
+					suave con notas de chocolate y caramelo, a un precio especial por tiempo limitado.</p>
+				<div class="promo-countdown">
+					<div class="countdown-block"><span class="countdown-num" id="cdHours">00</span><span
+							class="countdown-label">Horas</span></div>
+					<span class="countdown-sep">:</span>
+					<div class="countdown-block"><span class="countdown-num" id="cdMins">00</span><span
+							class="countdown-label">Minutos</span></div>
+					<span class="countdown-sep">:</span>
+					<div class="countdown-block"><span class="countdown-num" id="cdSecs">00</span><span
+							class="countdown-label">Segundos</span></div>
+				</div>
+				<a href="#products" class="btn-primary"><span>Comprar Ahora</span></a>
+			</div>
+			<div class="promo-img reveal reveal-delay-2">
+				<img src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=700&q=80" alt="Coffee Vienna"
+					class="promo-img-main">
+				<div class="promo-badge"><span class="promo-badge-num">30%</span><span
+						class="promo-badge-text">OFF</span></div>
+			</div>
+		</div>
+	</section>
+	<section class="gallery">
+		<div class="inner">
+			<div class="section-header reveal">
+				<span class="section-tag">Galería</span>
+				<h2 class="section-title">Nuestra <em>Historia</em></h2>
+				<div class="section-line"></div>
+			</div>
+			<div class="gallery-grid">
+				<div class="gallery-item reveal"><img
+						src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80" alt="Gallery">
+					<div class="gallery-hover"><i class="fa fa-expand"></i></div>
+				</div>
+				<div class="gallery-item reveal reveal-delay-1"><img
+						src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&q=80" alt="Gallery">
+					<div class="gallery-hover"><i class="fa fa-expand"></i></div>
+				</div>
+				<div class="gallery-item reveal reveal-delay-2"><img
+						src="https://images.unsplash.com/photo-1464983953574-0892a716854b?w=600&q=80" alt="Gallery">
+					<div class="gallery-hover"><i class="fa fa-expand"></i></div>
+				</div>
+				<div class="gallery-item reveal reveal-delay-3"><img
+						src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80" alt="Gallery">
+					<div class="gallery-hover"><i class="fa fa-expand"></i></div>
+				</div>
+				<div class="gallery-item reveal reveal-delay-1"><img
+						src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600&q=80" alt="Gallery">
+					<div class="gallery-hover"><i class="fa fa-expand"></i></div>
+				</div>
+				<div class="gallery-item reveal reveal-delay-2"><img
+						src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80" alt="Gallery">
+					<div class="gallery-hover"><i class="fa fa-expand"></i></div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="testimonials">
+		<div class="inner">
+			<div class="section-header reveal">
+				<span class="section-tag">Testimonios</span>
+				<h2 class="section-title">Lo que dicen <em>nuestros</em><br>clientes</h2>
+				<div class="section-line"></div>
+			</div>
+			<div class="testimonials-slider">
+				<div class="testimonials-track" id="testimonialsTrack">
+					<div class="testimonial-slide">
+						<div class="testimonial-stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+								class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+						<p class="testimonial-text">"El mejor café que he probado en mi vida. La calidad es
+							incomparable, cada sorbo es una experiencia. El perfil de sabores del Ethiopian Yirgacheffe
+							es simplemente extraordinario."</p>
+						<div class="testimonial-author">
+							<img src="https://i.pravatar.cc/100?img=11" alt="Cliente" class="testimonial-avatar">
+							<div>
+								<p class="testimonial-name">María González</p>
+								<p class="testimonial-role">Barista Profesional, Madrid</p>
+							</div>
+						</div>
+					</div>
+					<div class="testimonial-slide">
+						<div class="testimonial-stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+								class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+						<p class="testimonial-text">"Desde que descubrí Baristas, no puedo tomar café de ningún otro
+							lugar. La suscripción mensual es perfecta: siempre fresco, siempre sorprendente."</p>
+						<div class="testimonial-author">
+							<img src="https://i.pravatar.cc/100?img=22" alt="Cliente" class="testimonial-avatar">
+							<div>
+								<p class="testimonial-name">Carlos Ruiz</p>
+								<p class="testimonial-role">Chef, Ciudad de México</p>
+							</div>
+						</div>
+					</div>
+					<div class="testimonial-slide">
+						<div class="testimonial-stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+								class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
+						<p class="testimonial-text">"La atención al cliente es excepcional. Me ayudaron a encontrar el
+							blend perfecto para mi método de extracción. Ahora mi rutina matutina es sagrada."</p>
+						<div class="testimonial-author">
+							<img src="https://i.pravatar.cc/100?img=33" alt="Cliente" class="testimonial-avatar">
+							<div>
+								<p class="testimonial-name">Ana Martínez</p>
+								<p class="testimonial-role">Diseñadora, Buenos Aires</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="slider-dots" id="sliderDots"></div>
+			</div>
+		</div>
+	</section>
+	<section class="blogs" id="blogs">
+		<div class="inner">
+			<div class="section-header reveal">
+				<span class="section-tag">Blog</span>
+				<h2 class="section-title">Últimas <em>Historias</em></h2>
+				<div class="section-line"></div>
+			</div>
+			<div class="blogs-grid">
+				<div class="blog-card reveal">
+					<div class="blog-img-wrap">
+						<img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=700&q=80" alt="Blog">
+						<span class="blog-cat">Guía</span>
+					</div>
+					<div class="blog-body">
+						<div class="blog-meta">
+							<span><i class="fa fa-calendar"></i>15 Enero 2025</span>
+							<span><i class="fa fa-clock"></i>5 min lectura</span>
+						</div>
+						<h3 class="blog-title">El arte del espresso perfecto: guía para baristas principiantes</h3>
+						<p class="blog-excerpt">Aprende los secretos que los baristas profesionales usan para extraer un
+							espresso con la crema perfecta y un balance ideal entre acidez y dulzura.</p>
+						<a href="#" class="blog-link">Leer artículo →</a>
+					</div>
+				</div>
+				<div class="blog-card reveal reveal-delay-1">
+					<div class="blog-img-wrap">
+						<img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&q=80" alt="Blog">
+						<span class="blog-cat">Origen</span>
+					</div>
+					<div class="blog-body">
+						<div class="blog-meta">
+							<span><i class="fa fa-calendar"></i>8 Enero 2025</span>
+							<span><i class="fa fa-clock"></i>7 min lectura</span>
+						</div>
+						<h3 class="blog-title">Viaje a Etiopía: en busca del café Yirgacheffe de origen único</h3>
+						<p class="blog-excerpt">Nuestro equipo visitó las granjas de café en las alturas de Yirgacheffe
+							para conocer a los productores que están detrás de nuestro blend más popular.</p>
+						<a href="#" class="blog-link">Leer artículo →</a>
+					</div>
+				</div>
+				<div class="blog-card reveal reveal-delay-2">
+					<div class="blog-img-wrap">
+						<img src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=700&q=80" alt="Blog">
+						<span class="blog-cat">Recetas</span>
+					</div>
+					<div class="blog-body">
+						<div class="blog-meta">
+							<span><i class="fa fa-calendar"></i>2 Enero 2025</span>
+							<span><i class="fa fa-clock"></i>4 min lectura</span>
+						</div>
+						<h3 class="blog-title">5 recetas de café frío para el verano que tienes que probar</h3>
+						<p class="blog-excerpt">Desde un cold brew clásico hasta un espresso tónico con lavanda, estas
+							recetas transformarán tu ritual del café en los meses más calurosos del año.</p>
+						<a href="#" class="blog-link">Leer artículo →</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="newsletter-section" id="contact">
+		<div class="inner newsletter-inner reveal">
+			<span class="section-tag">Newsletter</span>
+			<h2 class="section-title">Únete a nuestra<br><em>comunidad</em></h2>
+			<p>Recibe recetas exclusivas, noticias de origen y ofertas especiales directamente en tu bandeja de entrada.
+			</p>
+			<form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+				<input type="email" placeholder="Tu correo electrónico..." class="newsletter-input" id="newsletterEmail"
+					required>
+				<button type="submit" class="newsletter-btn">Suscribirse</button>
+			</form>
+		</div>
+	</section>
+	<footer>
+		<div class="inner">
+			<div class="footer-grid">
+				<div class="footer-brand">
+					<span class="footer-logo">B<span>A</span>RISTAS</span>
+					<p class="footer-about">Somos apasionados del café de especialidad. Desde 2010, seleccionamos los
+						mejores granos del mundo para llevarte una experiencia de café inigualable.</p>
+					<div class="footer-socials">
+						<a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+						<a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+						<a href="#" class="social-btn"><i class="fa-brands fa-twitter"></i></a>
+						<a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+						<a href="#" class="social-btn"><i class="fa-brands fa-pinterest-p"></i></a>
+					</div>
+				</div>
+				<div>
+					<p class="footer-col-title">Navegación</p>
+					<ul class="footer-links">
 						<li><a href="#">Inicio</a></li>
-						<li><a href="#">Moca Helado</a></li>
-						<li><a href="#">Expreso</a></li>
-						<li><a href="#">Capuchino</a></li>
-						<li><a href="#">Más</a></li>
-						<li><a href="#">Blog</a></li>
+						<li><a href="#categories">Categorías</a></li>
+						<li><a href="#products">Productos</a></li>
+						<li><a href="#blogs">Blog</a></li>
+						<li><a href="#contact">Contacto</a></li>
 					</ul>
-
-					<form class="search-form">
-						<input type="search" placeholder="Buscar..." />
-						<button class="btn-search">
-							<i class="fa-solid fa-magnifying-glass"></i>
-						</button>
-					</form>
-				</nav>
-			</div>
-		</header>
-
-		<section class="banner">
-			<div class="content-banner">
-				<p>Café Delicioso</p>
-				<h2>100% Natural <br />Café Fresco</h2>
-				<a href="#">Comprar ahora</a>
-			</div>
-		</section>
-
-		<main class="main-content">
-			<section class="container container-features">
-				<div class="card-feature">
-					<i class="fa-solid fa-plane-up"></i>
-					<div class="feature-content">
-						<span>Envío gratuito a nivel mundial</span>
-						<p>En pedido superior a $150</p>
-					</div>
 				</div>
-				<div class="card-feature">
-					<i class="fa-solid fa-wallet"></i>
-					<div class="feature-content">
-						<span>Contrareembolso</span>
-						<p>100% garantía de devolución de dinero</p>
-					</div>
+				<div>
+					<p class="footer-col-title">Mi Cuenta</p>
+					<ul class="footer-links">
+						<li><a href="#">Mi Perfil</a></li>
+						<li><a href="#">Mis Pedidos</a></li>
+						<li><a href="#">Lista de Deseos</a></li>
+						<li><a href="#">Reembolsos</a></li>
+						<li><a href="#">Términos</a></li>
+					</ul>
 				</div>
-				<div class="card-feature">
-					<i class="fa-solid fa-gift"></i>
-					<div class="feature-content">
-						<span>Tarjeta regalo especial</span>
-						<p>Ofrece bonos especiales con regalo</p>
+				<div id="contact">
+					<p class="footer-col-title">Contacto</p>
+					<div class="footer-contact-item">
+						<i class="fa fa-location-dot"></i>
+						<span>71 Pennington Lane, Vernon Rockville, CT 06066</span>
 					</div>
-				</div>
-				<div class="card-feature">
-					<i class="fa-solid fa-headset"></i>
-					<div class="feature-content">
-						<span>Servicio al cliente 24/7</span>
-						<p>LLámenos 24/7 al 123-456-7890</p>
+					<div class="footer-contact-item">
+						<i class="fa fa-phone"></i>
+						<span>+1 (123) 456-7890</span>
 					</div>
-				</div>
-			</section>
-
-			<section class="container top-categories">
-				<h1 class="heading-1">Mejores Categorías</h1>
-				<div class="container-categories">
-					<div class="card-category category-moca">
-						<p>Café moca</p>
-						<span>Ver más</span>
+					<div class="footer-contact-item">
+						<i class="fa fa-envelope"></i>
+						<span>baristas@support.com</span>
 					</div>
-					<div class="card-category category-expreso">
-						<p>Expreso Americano</p>
-						<span>Ver más</span>
+					<div class="footer-contact-item">
+						<i class="fa fa-clock"></i>
+						<span>Lun — Sáb: 8:00 — 20:00</span>
 					</div>
-					<div class="card-category category-capuchino">
-						<p>Capuchino</p>
-						<span>Ver más</span>
-					</div>
-				</div>
-			</section>
-
-			<section class="container top-products">
-				<h1 class="heading-1">Mejores Productos</h1>
-
-				<div class="container-options">
-					<span class="active">Destacados</span>
-					<span>Más recientes</span>
-					<span>Mejores Vendidos</span>
-				</div>
-
-				<div class="container-products">
-					<!-- Producto 1 -->
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-irish.jpg" alt="Cafe Irish" />
-							<span class="discount">-13%</span>
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-							</div>
-							<h3>Cafe Irish</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$4.60 <span>$5.30</span></p>
-						</div>
-					</div>
-					<!-- Producto 2 -->
-					<div class="card-product">
-						<div class="container-img">
-							<img
-								src="img/cafe-ingles.jpg"
-								alt="Cafe incafe-ingles.jpg"
-							/>
-							<span class="discount">-22%</span>
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-							</div>
-							<h3>Cafe Inglés</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.70 <span>$7.30</span></p>
-						</div>
-					</div>
-					<!--  -->
-					<div class="card-product">
-						<div class="container-img">
-							<img
-								src="img/cafe-australiano.jpg"
-								alt="Cafe Australiano"
-							/>
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-							</div>
-							<h3>Cafe Australiano</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$3.20</p>
-						</div>
-					</div>
-					<!--  -->
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-helado.jpg" alt="Cafe Helado" />
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-							</div>
-							<h3>Cafe Helado</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.60</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="gallery">
-				<img
-					src="img/gallery1.jpg"
-					alt="Gallery Img1"
-					class="gallery-img-1"
-				/><img
-					src="img/gallery2.jpg"
-					alt="Gallery Img2"
-					class="gallery-img-2"
-				/><img
-					src="img/gallery3.jpg"
-					alt="Gallery Img3"
-					class="gallery-img-3"
-				/><img
-					src="img/gallery4.jpg"
-					alt="Gallery Img4"
-					class="gallery-img-4"
-				/><img
-					src="img/gallery5.jpg"
-					alt="Gallery Img5"
-					class="gallery-img-5"
-				/>
-			</section>
-
-			<section class="container specials">
-				<h1 class="heading-1">Especiales</h1>
-
-				<div class="container-products">
-					<!-- Producto 1 -->
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-irish.jpg" alt="Cafe Irish" />
-							<span class="discount">-13%</span>
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-							</div>
-							<h3>Cafe Irish</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$4.60 <span>$5.30</span></p>
-						</div>
-					</div>
-					<!-- Producto 2 -->
-					<div class="card-product">
-						<div class="container-img">
-							<img
-								src="img/cafe-ingles.jpg"
-								alt="Cafe incafe-ingles.jpg"
-							/>
-							<span class="discount">-22%</span>
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-							</div>
-							<h3>Cafe Inglés</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.70 <span>$7.30</span></p>
-						</div>
-					</div>
-					<!--  -->
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-viena.jpg" alt="Cafe Viena" />
-							<span class="discount">-30%</span>
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-							</div>
-							<h3>Cafe Viena</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$3.85 <span>$5.50</span></p>
-						</div>
-					</div>
-					<!--  -->
-					<div class="card-product">
-						<div class="container-img">
-							<img src="img/cafe-liqueurs.jpg" alt="Cafe Liqueurs" />
-							<div class="button-group">
-								<span>
-									<i class="fa-regular fa-eye"></i>
-								</span>
-								<span>
-									<i class="fa-regular fa-heart"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-code-compare"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-card-product">
-							<div class="stars">
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-solid fa-star"></i>
-								<i class="fa-regular fa-star"></i>
-							</div>
-							<h3>Cafe Liqueurs</h3>
-							<span class="add-cart">
-								<i class="fa-solid fa-basket-shopping"></i>
-							</span>
-							<p class="price">$5.60</p>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="container blogs">
-				<h1 class="heading-1">Últimos Blogs</h1>
-
-				<div class="container-blogs">
-					<div class="card-blog">
-						<div class="container-img">
-							<img src="img/blog-1.jpg" alt="Imagen Blog 1" />
-							<div class="button-group-blog">
-								<span>
-									<i class="fa-solid fa-magnifying-glass"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-link"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-blog">
-							<h3>Lorem, ipsum dolor sit</h3>
-							<span>29 Noviembre 2022</span>
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing
-								elit. Iste, molestiae! Ratione et, dolore ipsum
-								quaerat iure illum reprehenderit non maxime amet dolor
-								voluptas facilis corporis, consequatur eius est sunt
-								suscipit?
-							</p>
-							<div class="btn-read-more">Leer más</div>
-						</div>
-					</div>
-					<div class="card-blog">
-						<div class="container-img">
-							<img src="img/blog-2.jpg" alt="Imagen Blog 2" />
-							<div class="button-group-blog">
-								<span>
-									<i class="fa-solid fa-magnifying-glass"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-link"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-blog">
-							<h3>Lorem, ipsum dolor sit</h3>
-							<span>29 Noviembre 2022</span>
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing
-								elit. Iste, molestiae! Ratione et, dolore ipsum
-								quaerat iure illum reprehenderit non maxime amet dolor
-								voluptas facilis corporis, consequatur eius est sunt
-								suscipit?
-							</p>
-							<div class="btn-read-more">Leer más</div>
-						</div>
-					</div>
-					<div class="card-blog">
-						<div class="container-img">
-							<img src="img/blog-3.jpg" alt="Imagen Blog 3" />
-							<div class="button-group-blog">
-								<span>
-									<i class="fa-solid fa-magnifying-glass"></i>
-								</span>
-								<span>
-									<i class="fa-solid fa-link"></i>
-								</span>
-							</div>
-						</div>
-						<div class="content-blog">
-							<h3>Lorem, ipsum dolor sit</h3>
-							<span>29 Noviembre 2022</span>
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing
-								elit. Iste, molestiae! Ratione et, dolore ipsum
-								quaerat iure illum reprehenderit non maxime amet dolor
-								voluptas facilis corporis, consequatur eius est sunt
-								suscipit?
-							</p>
-							<div class="btn-read-more">Leer más</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
-
-		<footer class="footer">
-			<div class="container container-footer">
-				<div class="menu-footer">
-					<div class="contact-info">
-						<p class="title-footer">Información de Contacto</p>
-						<ul>
-							<li>
-								Dirección: 71 Pennington Lane Vernon Rockville, CT
-								06066
-							</li>
-							<li>Teléfono: 123-456-7890</li>
-							<li>Fax: 55555300</li>
-							<li>EmaiL: baristas@support.com</li>
-						</ul>
-						<div class="social-icons">
-							<span class="facebook">
-								<i class="fa-brands fa-facebook-f"></i>
-							</span>
-							<span class="twitter">
-								<i class="fa-brands fa-twitter"></i>
-							</span>
-							<span class="youtube">
-								<i class="fa-brands fa-youtube"></i>
-							</span>
-							<span class="pinterest">
-								<i class="fa-brands fa-pinterest-p"></i>
-							</span>
-							<span class="instagram">
-								<i class="fa-brands fa-instagram"></i>
-							</span>
-						</div>
-					</div>
-
-					<div class="information">
-						<p class="title-footer">Información</p>
-						<ul>
-							<li><a href="#">Acerca de Nosotros</a></li>
-							<li><a href="#">Información Delivery</a></li>
-							<li><a href="#">Politicas de Privacidad</a></li>
-							<li><a href="#">Términos y condiciones</a></li>
-							<li><a href="#">Contactános</a></li>
-						</ul>
-					</div>
-
-					<div class="my-account">
-						<p class="title-footer">Mi cuenta</p>
-
-						<ul>
-							<li><a href="#">Mi cuenta</a></li>
-							<li><a href="#">Historial de ordenes</a></li>
-							<li><a href="#">Lista de deseos</a></li>
-							<li><a href="#">Boletín</a></li>
-							<li><a href="#">Reembolsos</a></li>
-						</ul>
-					</div>
-
-					<div class="newsletter">
-						<p class="title-footer">Boletín informativo</p>
-
-						<div class="content">
-							<p>
-								Suscríbete a nuestros boletines ahora y mantente al
-								día con nuevas colecciones y ofertas exclusivas.
-							</p>
-							<input type="email" placeholder="Ingresa el correo aquí...">
-							<button>Suscríbete</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="copyright">
-					<p>
-						Desarrollado por Programación para el mundo &copy; 2022
-					</p>
-
-					<img src="img/payment.png" alt="Pagos">
 				</div>
 			</div>
-		</footer>
-	</body>
+			<div class="footer-bottom">
+				<p class="footer-copy">© 2025 Baristas. Todos los derechos reservados. Hecho con ☕</p>
+			</div>
+		</div>
+	</footer>
+
+	<script src="script.js">
+	
+	
+	</script>
+</body>
+
 </html>
